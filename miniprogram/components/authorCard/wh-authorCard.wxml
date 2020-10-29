@@ -1,0 +1,19 @@
+<!-- 蒙版效果 -->
+<view class="mask" hidden="{{isHidden}}" catchtap="closeMask">
+    <view class="masks" catchtap="prevent" animation="{{ani}}">
+        <view class="box">
+            <image class="leftImage" mode="widthFix" src="https://dalididilo.top/upload/2020/10/WechatIMG100-78b0614b993c446da57cae5e1d2b2cd3.jpeg"></image>
+            <view class="right">
+                <view class="title">
+                    <text class="name">EngineerZhong</text>
+                </view>
+                <view class="info">
+                    <view class="field">Email</view>
+                    <view class="value">xunwu451@126.com</view>
+                    <view class="field">blog</view>
+                    <view class="value">https://dalididilo.top</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
