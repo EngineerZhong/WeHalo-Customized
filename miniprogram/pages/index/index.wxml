@@ -7,7 +7,7 @@
         </view>
     </cu-custom>
     <wh-addTips text="Meow~ 点击「添加到我的小程序」" duration="2"></wh-addTips>
-    <view bindtouchstart="touchStart" bindtouchend="touchEnd" class="flex justify-center align-center bg-white" style="width:100%; height:460rpx; background-image:url(https://i.loli.net/2019/07/05/5d1eb991a72de80058.png); background-repeat: no-repeat; background-size: 100% 100%;">
+    <view bindtouchstart="touchStart" bindtouchend="touchEnd" class="flex justify-center align-center bg-white" style="width:100%; height:460rpx; background-image:url(https://i0.hippopx.com/photos/650/104/989/sad-depressed-depression-sadness-preview.jpg); background-repeat: no-repeat; background-size: 100% 100%;">
         <view class="grid col-1 margin-bottom text-center">
             <view class="text-xxxl padding text-shadow-meow" role="" aria-label="">
                 <text class="text-white text-bold">{{BlogName}}</text>
