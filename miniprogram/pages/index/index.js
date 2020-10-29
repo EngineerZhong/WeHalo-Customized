@@ -31,6 +31,7 @@ Page({
         scrollLeft: 0,
         openid: '',
         Role: '游客',
+        skin:true,
         roleFlag: false,
         adminOpenid: app.globalData.adminOpenid,
         colourList: [{

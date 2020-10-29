@@ -72,13 +72,13 @@ page {
 	color: var(--black);
 	font-family: Helvetica Neue, Helvetica, sans-serif;
 
-    /* 自定义 */
-    --lightBlue: #40a9ff;
-    --lightGrey:  #ededed;
-    --gradualBlack: linear-gradient(45deg, #0000007a, #ffffff79);
-    --gradualDreamBlue: linear-gradient(45deg, #7667af, #84cfe3, #0f5396);
-    --gradualGrey: linear-gradient(#ededed, #ededed, #ededed);
-    --gradualShadow: linear-gradient(45deg, #c7c7c7, #ededed, #ffffff);
+	/* 自定义 */
+	--lightBlue: #40a9ff;
+	--lightGrey: #ededed;
+	--gradualBlack: linear-gradient(45deg, #0000007a, #ffffff79);
+	--gradualDreamBlue: linear-gradient(45deg, #7667af, #84cfe3, #0f5396);
+	--gradualGrey: linear-gradient(#ededed, #ededed, #ededed);
+	--gradualShadow: linear-gradient(45deg, #c7c7c7, #ededed, #ffffff);
 }
 
 view,
@@ -315,21 +315,21 @@ radio.radio[checked]::after {
 }
 
 .switch-theme::after {
-    content: "\e718";
+	content: "\e718";
 }
 
 .switch-theme::before {
-    content: "\e719";
+	content: "\e719";
 }
 
 .switch-theme .wx-switch-input {
-    background: var(--red) !important;
-    border-color: var(--red) !important;
+	background: var(--red) !important;
+	border-color: var(--red) !important;
 }
 
 .switch-theme[checked] .wx-switch-input {
-    background: var(--black) !important;
-    border-color: var(--black) !important;
+	background: var(--black) !important;
+	border-color: var(--black) !important;
 }
 
 switch.red[checked] .wx-switch-input,
@@ -652,7 +652,7 @@ radio.white[checked] .wx-radio-input {
 }
 
 .shadow-meow {
-  box-shadow: 4rpx 8rpx 26rpx rgba(0, 0, 0, 0.300);
+	box-shadow: 4rpx 8rpx 26rpx rgba(0, 0, 0, 0.300);
 }
 
 .shadow-lg {
@@ -999,9 +999,9 @@ button.icon.lg {
 }
 
 .cu-avatar.xxl {
-    width: 240rpx;
-    height: 240rpx;
-    font-size: 2.5em;
+	width: 240rpx;
+	height: 240rpx;
+	font-size: 2.5em;
 }
 
 .cu-avatar .avatar-text {
@@ -2034,7 +2034,7 @@ button.icon.lg {
 	height: 90rpx;
 	display: inline-block;
 	line-height: 90rpx;
-	margin: 0 10rpx;
+	margin: 0 5rpx;
 	padding: 0 20rpx;
 }
 
@@ -2573,11 +2573,13 @@ button.icon.lg {
 .cu-modal.drawer-modal.show .cu-dialog {
 	transform: translateX(0%);
 }
-.cu-modal .cu-dialog>.cu-bar:first-child .action{
-  min-width: 100rpx;
-  margin-right: 0;
-  min-height: 100rpx;
+
+.cu-modal .cu-dialog>.cu-bar:first-child .action {
+	min-width: 100rpx;
+	margin-right: 0;
+	min-height: 100rpx;
 }
+
 /* ==================
          轮播
  ==================== */
@@ -2616,11 +2618,11 @@ swiper.round-dot .wx-swiper-dot {
 	height: 10rpx;
 	position: relative;
 	margin: 4rpx 8rpx !important; */
-    width: 0rpx;
-    height: 0rpx;
-    top: -4rpx;
-    transition: all 0.3s ease-in-out 0s;
-    position: relative;
+	width: 0rpx;
+	height: 0rpx;
+	top: -4rpx;
+	transition: all 0.3s ease-in-out 0s;
+	position: relative;
 }
 
 swiper.round-dot .wx-swiper-dot.wx-swiper-dot-active::after {
@@ -2635,29 +2637,29 @@ swiper.round-dot .wx-swiper-dot.wx-swiper-dot-active::after {
 	margin: auto;
 	background-color: var(--white);
 	border-radius: 20rpx; */
-    content: "";
-    position: absolute;
-    width: 0rpx;
-    height: 0rpx;
-    top: 0rpx;
-    left: 0rpx;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    background-color: #fff;
-    border-radius: 20rpx;
+	content: "";
+	position: absolute;
+	width: 0rpx;
+	height: 0rpx;
+	top: 0rpx;
+	left: 0rpx;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	background-color: #fff;
+	border-radius: 20rpx;
 }
 
 swiper.round-dot .wx-swiper-dot.wx-swiper-dot-active {
 	/* width: 18rpx;
 	height: 18rpx; */
-    width: 0rpx;
-    height: 0rpx;
-    top: 0rpx;
+	width: 0rpx;
+	height: 0rpx;
+	top: 0rpx;
 }
 
 .screen-swiper {
-	min-height: 375rpx;
+	min-height: 300rpx;
 }
 
 .screen-swiper image,
@@ -2672,19 +2674,19 @@ swiper.round-dot .wx-swiper-dot.wx-swiper-dot-active {
 }
 
 .card-swiper {
-	height: 440rpx !important;
+	height: 300rpx !important;
 }
 
 .card-swiper swiper-item {
-    /* width: 610rpx !important;
+	/* width: 610rpx !important;
     left: 70rpx;
     box-sizing: border-box;
     padding: 40rpx 0rpx 70rpx;
     overflow: initial; */
-    width: 100% !important;
-    /* left: 20rpx; */
-    box-sizing: border-box;
-    overflow: initial;
+	width: 100% !important;
+	/* left: 20rpx; */
+	box-sizing: border-box;
+	overflow: initial;
 }
 
 .card-swiper swiper-item .swiper-item {
@@ -3058,7 +3060,7 @@ scroll-view.cu-steps .cu-item {
 .grid.col-2.grid-square>view:nth-child(2n),
 .grid.col-3.grid-square>view:nth-child(3n),
 .grid.col-4.grid-square>view:nth-child(4n),
-.grid.col-5.grid-square>view:nth-child(5n){
+.grid.col-5.grid-square>view:nth-child(5n) {
 	margin-right: 0;
 }
 
@@ -3527,8 +3529,8 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-lightBlue {
-    background-color: var(--lightBlue);
-    color: var(--white);
+	background-color: var(--lightBlue);
+	color: var(--white);
 }
 
 .bg-purple {
@@ -3572,8 +3574,8 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-lightGrey {
-    background-color: var(--lightGrey);
-    color: var(--white);
+	background-color: var(--lightGrey);
+	color: var(--white);
 }
 
 .bg-shadeTop {
@@ -3633,8 +3635,8 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-lightBlue.light {
-  color: var(--lightBlue);
-  background-color: var(--blueLight);
+	color: var(--lightBlue);
+	background-color: var(--blueLight);
 }
 
 .bg-purple.light {
@@ -3693,23 +3695,23 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-gradual-black {
-    background-image: var(--gradualBlack);
-    color: var(--white);
+	background-image: var(--gradualBlack);
+	color: var(--white);
 }
 
 .bg-gradual-dreamBlue {
-    background-image: var(--gradualDreamBlue);
-    color: var(--white);
+	background-image: var(--gradualDreamBlue);
+	color: var(--white);
 }
 
 .bg-gradual-Grey {
-    background-image: var(--gradualGrey);
-    color: var(--white);
+	background-image: var(--gradualGrey);
+	color: var(--white);
 }
 
 .bg-gradual-shadow {
-  background-image: var(--gradualShadow);
-  color: var(--white);
+	background-image: var(--gradualShadow);
+	color: var(--white);
 }
 
 .shadow[class*="-red"] {
@@ -3829,11 +3831,11 @@ scroll-view.cu-steps .cu-item {
 }
 
 .text-shadow-meows {
-    text-shadow: 2rpx 4rpx 20rpx rgba(0, 0, 0, 20);
+	text-shadow: 2rpx 4rpx 20rpx rgba(0, 0, 0, 20);
 }
 
 .text-shadow-meow {
-    text-shadow: 4rpx 8rpx 20rpx rgba(0, 0, 0, 100);
+	text-shadow: 4rpx 8rpx 20rpx rgba(0, 0, 0, 100);
 }
 
 .bg-img {
@@ -3912,7 +3914,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .text-xxxl {
-    font-size: 52rpx;
+	font-size: 52rpx;
 }
 
 .text-sl {
@@ -4009,10 +4011,10 @@ scroll-view.cu-steps .cu-item {
 	color: var(--blue);
 }
 
-.text-lightBlue, 
-.line-lightBlue, 
+.text-lightBlue,
+.line-lightBlue,
 .lines-lightBlue {
-    color: var(--lightBlue);
+	color: var(--lightBlue);
 }
 
 .text-purple,
@@ -4064,10 +4066,10 @@ scroll-view.cu-steps .cu-item {
 }
 
 
-.home-img{
-    padding: 24rpx;
-    background-repeat: no-repeat;
-    background-size: contain;
-    /* background-image:url(../image/cat.png); */
-    background-image:url('https://dalididilo.top/upload/2020/10/WechatIMG100-78b0614b993c446da57cae5e1d2b2cd3.jpeg');
+.home-img {
+	padding: 24rpx;
+	background-repeat: no-repeat;
+	background-size: contain;
+	/* background-image:url(../image/cat.png); */
+	background-image: url('https://dalididilo.top/upload/2020/10/WechatIMG100-78b0614b993c446da57cae5e1d2b2cd3.jpeg');
 }

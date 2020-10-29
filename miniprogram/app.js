@@ -97,7 +97,7 @@ App({
         skin: null,
         roleFlag: false,
         url: "https://dalididilo.top",//http://localhost:8090
-        BlogName: "@大离弟弟咯。",
+        BlogName: "大离弟弟咯。",
         token: "dalididilo",
         highlightStyle: "dracula", //代码高亮样式，可用值default,darcula,dracula,tomorrow
         adminOpenid: "o8uur5bWqiXnYBrqj3sYGR6rDr6E",
