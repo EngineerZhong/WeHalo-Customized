@@ -18,7 +18,8 @@
     "cu-custom": "/colorui/components/cu-custom",
     "wh-typeWriter": "/components/typeWriter/wh-typeWriter",
     "wh-authorCard": "/components/authorCard/wh-authorCard",
-    "wh-addTips": "/components/addTips/wh-addTips"
+    "wh-addTips": "/components/addTips/wh-addTips",
+    "painter":"/components/painter/painter"
   },
   "plugins": {
     "htmltowxml": {

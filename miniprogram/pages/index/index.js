@@ -12,8 +12,9 @@ let touchDotX = 0;//X按下时坐标
 let touchDotY = 0;//y按下时坐标
 let interval;//计时器
 let time = 0;//从按下到松开共多少时间*100
-
+import SharePage from '../palette/share-page';
 Page({
+    imagePath: '',
     data: {
         StatusBar: app.globalData.StatusBar,
         CustomBar: app.globalData.CustomBar,
@@ -33,6 +34,7 @@ Page({
         cardCur: 0,
         TabCur: 0,
         TagCur:'ALL_POSTS',
+        isSave: false,
         scrollLeft: 0,
         openid: '',
         Role: '游客',
@@ -62,6 +64,50 @@ Page({
         }, {
             colour: 'bg-lightBlue'
         }],
+    },
+    /**
+    * 生命周期函数--监听页面初次渲染完成
+    */
+   onReady: function() {
+     this.setData({
+       paintPallette: new SharePage().palette('打工人,打工魂 [ 1 ]','Kafka消息队列','Kafka','https://6461-dalididilo-9g71etxb79b52752-1304058615.tcb.qcloud.la/pages/index/index.jpg'),
+     });
+   },
+   /** 
+   *  保存海报图片弹窗。
+   */
+    hideSaveModal(e) {
+        this.setData({
+            isSave: false
+        })
+    },
+    /** 
+    * wxfile:// 临时文件的一个大坑。
+    * <view>标签 background-image: url('') 支持渲染base64的图片格式
+    * 'data: image/jpg;base64,' + base64
+    */
+    onImgOK(e) {
+        var that = this;
+        that.imagePath = e.detail.path;
+        console.log(that.imagePath);
+        let base64 = wx.getFileSystemManager().readFileSync(that.imagePath,"base64");
+        that.setData({
+            image: 'data: image/jpg;base64,' + base64,
+            isSave:true
+        })
+    },
+    saveImage() {
+        var that = this;
+        if (that.imagePath && typeof this.imagePath === 'string') {
+          wx.saveImageToPhotosAlbum({
+            filePath: this.imagePath,
+            success(res){
+                that.setData({
+                    isSave:false
+                })
+            }
+          });
+        }
     },
     /**
      * 监听屏幕滚动 判断上下滚动
@@ -203,7 +249,26 @@ Page({
         };
         // @todo 获取后台token网络请求API数据
         request.requestPostApi(urlAdminLogin, token, paramAdminLogin, this, this.successAdminLogin, this.failAdminLogin);
-
+        // this.getaccessToken();
+    },
+    getaccessToken:function(){
+        // var wxUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
+        // request.requestGetApi(urlAdminLogin, token, paramAdminLogin, this, this.successAdminLogin, this.failAdminLogin);
+        // 云函数调用
+        wx.cloud.callFunction({
+            // 云函数名称
+            name: 'wxacode_get',
+            // 传给云函数的参数
+            data: {
+                pathParam:'pages/index/index',
+                width: 430
+            },
+            success(res) {
+                console.log(res.result[0].tempFileURL);
+            },
+            fail: err => {
+            },
+        })
     },
     getUserInfo: function (e) {
         // console.log(e.detail.errMsg)
