@@ -7,19 +7,29 @@
         </view>
     </cu-custom>
     <wh-addTips text="点击「添加到我的小程序」" duration="2"></wh-addTips>
+    <view class="cu-bar search">
+        <view class="search-form round">
+            <text class="cuIcon-search"></text>
+            <input bindinput="Search" id="search" name="content" type="text" placeholder="搜索文章、关键词" confirm-type="search"></input>
+        </view>
+        <view class="action">
+            <button class="cu-btn bg-lightBlue shadow-blur round" bindtap="SearchSubmit">搜索</button>
+        </view>
+    </view>
     <view bindtouchstart="touchStart" bindtouchend="touchEnd" class="flex justify-center align-center bg-white"
-     style="width:100%; height:460rpx; background-image:url(https://dalididilo.top/upload/2020/10/sad-depressed-depression-sadness-4db6148f8f75576497c31e4d47a51440%E5%89%AF%E6%9C%AC-8e59140ace3e4e8da00dfed6bb284a14.jpg); background-repeat: no-repeat; background-size: 100% 100%;">
-        <view class="grid col-1 margin-bottom text-center">
+     style="width:100%; margin-top:-50rpx; height:460rpx; background-image:url(https://dalididilo.top/upload/2020/10/sad-depressed-depression-sadness-4db6148f8f75576497c31e4d47a51440%E5%89%AF%E6%9C%AC-8e59140ace3e4e8da00dfed6bb284a14.jpg); background-repeat: no-repeat; background-size: 100% 100%;">
+        <view class="grid col-1 margin-bottom margin-top text-center" >
             <!-- <view class="text-xxxl padding text-shadow-meow" role="" aria-label="">
                 <text class="text-white text-bold">{{BlogName}}</text>
             </view> -->
-            <view class="text-xl padding text-shadow-meow text-white text-bold" role="" aria-label="">
+            <view class="text-df padding text-shadow-meow text-white text-bold" role="" aria-label="">
                 <wh-typeWriter whContent="{{jinrishici}}"></wh-typeWriter>
             </view>
         </view>
     </view>
+    
     <view class="home text-shadow-meow" bindtap="showModal" data-target="viewModal">
-        <view class="home-btn home-img shadow-blur"></view>
+        <view class="cu-avatar round home-btn home-img shadow-blur"></view>
     </view>
     <!-- catch:touchstart="maopao" catch:touchend="maopao" -->
     <view style="margin-top: -60rpx;">
@@ -34,7 +44,7 @@
                                         {{bannerPost.title}}
                                     </view>
                                 </view>
-                                <view class="padding-lg text-white" style="position:absolute; bottom:0; right:0;">
+                                <view class="padding-lg text-white" style="position:absolute; bottom:10rpx; right:0;">
                                     <view class="padding-xs text-df text-bold text-shadow">
                                         {{bannerPost.createTime}}
                                     </view>
@@ -49,17 +59,23 @@
     <view style="margin-right:20rpx; margin-left:20rpx;">
         <official-account style=""></official-account>
     </view>
-    <view class="cu-bar search bg-white">
-        <view class="search-form round">
-            <text class="cuIcon-search"></text>
-            <input bindinput="Search" id="search" name="content" type="text" placeholder="搜索文章、关键词" confirm-type="search"></input>
-        </view>
-        <view class="action">
-            <button class="cu-btn bg-lightBlue shadow-blur round" bindtap="SearchSubmit">搜索</button>
-        </view>
+    
+    <view class="padding-left-sm padding-right-sm bg-white">
+        <scroll-view scroll-x 
+            style="background-color: {{skin?'#ffffff':'#ffffff'}};">
+            <view class="padding-xs" style="display:flex;">
+                <block wx:for="{{tagsList}}" wx:key="keyId" wx:for-index="index" wx:for-item="tag">
+                    <view class='cu-item cu-tag padding-left-sm padding-right-sm bg-img light {{colourList[(index+randomNum)%10].colour}} animation-scale-up round {{tag.slug == TagCur?"text-shadow":""}}' style='animation-delay: {{(index+1)*0.2*animationTime}}s;'
+                    bindtap="TagSelect" data-slug="{{tag.slug}}">
+                        {{tag.name}}
+                    </view>
+                </block>
+            </view>
+        </scroll-view>
     </view>
-    <scroll-view scroll-x class="bg-white nav text-center" style="background-color: {{skin?'#ffffff':'#ffffff'}};">
-        <view class="cu-item {{index==TabCur?'text-blue text-shadow text-xl':''}}  text-bold text-lg" wx:for="{{pages>10?pages:10}}" wx:key="keyId" wx:for-index="index" bindtap="tabSelect" data-id="{{index}}" style="line-height:60rpx;">
+    
+    <scroll-view scroll-x class="bg-white nav text-center" style="background-color: {{skin?'#ffffff':'#ffffff'}};padding-bottom:10rpx">
+        <view class="cu-item {{index==TabCur?'text-blue text-shadow text-xl':''}}  text-bold text-lg" wx:for="{{pages>10?pages:10}}" wx:key="keyId" wx:for-index="index" bindtap="tabSelect" data-id="{{index}}">
             <!-- {{index}} -->
             {{index==0?'D':''}} {{index==1?'A':''}} {{index==2?'L':''}} {{index==3?'I':''}} {{index==4?'D':''}}
             {{index==5?'I':''}}{{index==6?'D':''}}{{index==7?'I':''}}
@@ -68,6 +84,8 @@
                 & index!=5& index!=6& index!=7& index!=8& index!=9 ?'。':''}}
         </view>
     </scroll-view>
+    
+    
     <!-- 瀑布流 -->
     <!-- <view class="grid col-2 content text-center" bindtouchstart="touchStart" bindtouchend="touchEnd" wx:if="{{0==TabCur}}"> -->
     <view class="grid col-2 content text-center" bindtouchstart="touchStart" bindtouchend="touchEnd">

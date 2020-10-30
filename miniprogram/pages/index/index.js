@@ -1,6 +1,10 @@
 //index.js
 //获取应用实例
 const app = getApp()
+/**
+ * todo 这边报错了
+ */
+// const { ALL } = require('dns');
 const jinrishici = require('../../utils/jinrishici.js')
 const request = require('../../utils/request.js');
 let util = require('../../utils/util.js');
@@ -28,6 +32,7 @@ Page({
         pages: 0,
         cardCur: 0,
         TabCur: 0,
+        TagCur:'ALL_POSTS',
         scrollLeft: 0,
         openid: '',
         Role: '游客',
@@ -116,7 +121,7 @@ Page({
             },
             success(res) {
                 // console.log("CloudResult:", res);
-                console.log("openidCloudResult:", res.result.openid);
+                // console.log("openidCloudResult:", res.result.openid);
                 that.setData({
                     openid: res.result.openid
                 });
@@ -191,8 +196,6 @@ Page({
         // @todo 文章Banner网络请求API数据
         request.requestGetApi(urlPostList, token, paramBanner, this, this.successBanner, this.failBanner);
 
-
-        
         var urlAdminLogin = app.globalData.url + '/api/admin/login';
         var paramAdminLogin = {
             username: this.data.HaloUser,
@@ -200,7 +203,6 @@ Page({
         };
         // @todo 获取后台token网络请求API数据
         request.requestPostApi(urlAdminLogin, token, paramAdminLogin, this, this.successAdminLogin, this.failAdminLogin);
-
 
     },
     getUserInfo: function (e) {
@@ -331,13 +333,53 @@ Page({
             modalName: null
         })
     },
-    tabSelect(e) {
-
-        this.randomNum();
+    /**
+     * 标签点击事件。
+     */
+    TagSelect(e){
+        /**
+         * api地址
+         * {slug}
+         * https://dalididilo.top/api/content/tags/{slug}/posts
+         */
         this.setData({
             postList: [],
         });
-        var urlPostList = app.globalData.url + '/api/content/posts';
+        var currentTag = e.currentTarget.dataset.slug;
+        if(currentTag === "ALL_POSTS"){
+            var urlPostList = app.globalData.url + '/api/content/posts';
+        }else{
+            var urlPostList = app.globalData.url + '/api/content/tags/' + currentTag + '/posts';
+        }
+        var token = app.globalData.token;
+        var params = {
+            page: 0,
+            size: 10,
+            sort: 'createTime,desc',
+        };
+        //@todo 文章内容网络请求API数据
+        request.requestGetApi(urlPostList, token, params, this, this.successPostList, this.failPostList);
+
+        this.setData({
+            TagCur: currentTag,
+            scrollLeft: (e.currentTarget.dataset.id - 1) * 60
+        });
+    },
+    /**
+     * 分页Tab选择事件
+     */
+    tabSelect(e) {
+
+        // this.randomNum();
+        this.setData({
+            postList: [],
+        });
+        var currentTag = this.data.TagCur;
+        if(currentTag === "ALL_POSTS"){
+            var urlPostList = app.globalData.url + '/api/content/posts';
+        }else{
+            var urlPostList = app.globalData.url + '/api/content/tags/' + currentTag + '/posts';
+        }
         var token = app.globalData.token;
         // console.warn(e.currentTarget.dataset.id);
         var params = {
@@ -345,7 +387,6 @@ Page({
             size: 10,
             sort: 'createTime,desc',
         };
-
 
         //@todo 文章内容网络请求API数据
         request.requestGetApi(urlPostList, token, params, this, this.successPostList, this.failPostList);
@@ -428,9 +469,6 @@ Page({
     loadMore: function () {
 
     },
-
-
-
     /**
      * 文章Banner请求--接口调用成功处理
      */
@@ -462,6 +500,11 @@ Page({
         var list = res.data.content;
         for (let i = 0; i < list.length; ++i) {
             list[i].createTime = util.customFormatTime(list[i].createTime, 'Y.M.D');
+            /**
+             * todo 暂时保留全名称展示，后续整改。
+             */
+            // let temp = list[i].title;
+            // list[i].title = temp.substr(temp.indexOf('-') + 1,temp.length);
         }
         if (res.data.content != "") {
             that.setData({
@@ -503,6 +546,30 @@ Page({
         app.globalData.adminToken = res.data.access_token;
         // clearTimeout(delay);
         // console.warn(res)
+        // 标签请求API数据
+        that.GetTags(res.data.access_token);
+    },
+    GetTags: function(adminToken){
+        var urlGetTags = app.globalData.url + '/api/admin/tags';
+        // @todo 标签请求API数据
+        request.requestGetApi(urlGetTags, adminToken, null, this, this.successTags, this.failTags);
+    },
+    /**
+     * 加载Tags成功处理
+     */
+    successTags: function(res,selfObj){
+        var that = this;
+        var list = [{id:0,name:'All',slug:'ALL_POSTS'}];
+        
+        if (res.data != "") {
+            that.setData({
+                tagsList: list.concat(res.data),
+            });
+        } 
+    },
+
+    failTags:function(res,selfObj){
+        console.error('failTags', res)
     },
     /**
      * 后台登入请求--接口调用失败处理
@@ -510,8 +577,6 @@ Page({
     failAdminLogin: function (res, selfObj) {
         console.error('failAdminLogin', res)
     },
-
-
     /**
      * 搜索文章模块
      */

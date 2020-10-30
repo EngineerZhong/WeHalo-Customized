@@ -1575,11 +1575,13 @@ button.icon.lg {
 
 .cu-bar {
 	display: flex;
-	position: relative;
+	position: absolute;
 	align-items: center;
 	min-height: 100rpx;
+	width:100%;
 	justify-content: space-between;
 }
+
 
 .cu-bar .action {
 	display: flex;
@@ -2031,11 +2033,12 @@ button.icon.lg {
 }
 
 .nav .cu-item {
-	height: 90rpx;
+	height: 40rpx;
 	display: inline-block;
-	line-height: 90rpx;
-	margin: 0 5rpx;
+	/* line-height: 40rpx; */
+	/* margin: 0 5rpx; */
 	padding: 0 20rpx;
+	margin:0 10rpx;
 }
 
 .nav .cu-item.cur {
@@ -2674,7 +2677,7 @@ swiper.round-dot .wx-swiper-dot.wx-swiper-dot-active {
 }
 
 .card-swiper {
-	height: 300rpx !important;
+	height: 350rpx !important;
 }
 
 .card-swiper swiper-item {
