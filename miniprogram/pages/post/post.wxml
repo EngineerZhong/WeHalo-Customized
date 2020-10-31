@@ -16,7 +16,31 @@
         <text class="text-black text-bold">{{postTitle}}</text>
       </view>
     </view>
-
+    <painter
+        style="position:fixed;top:-9999rpx" 
+        customStyle='height: 1000rpx;'
+        use2D="{{true}}"
+        palette="{{paintPallette}}"
+        widthPixels="100%"
+        bind:imgOK="onImgOK"
+        bind:imgErr="onImgErr"
+    />
+    <!-- 图片保存弹窗 -->
+    <view class="cu-modal {{isSave?'show':''}}">
+        <view class="cu-dialog">
+            <view class="bg-img" style="background-image: url('{{image}}');height:1000rpx;">
+                <view class="cu-bar justify-end text-white">
+                    <view class="action" bindtap="hideSaveModal">
+                        <text class="cuIcon-close "></text>
+                    </view>
+                </view>
+            </view>
+            <view class="bg-white flex padding-sm">
+                <button class="flex-sub cu-btn round bg-red shadow-blur bg-red" bindtap="hideSaveModal">取消</button>
+                <button class="flex-sub margin-left-sm cu-btn round shadow-blur bg-blue" bindtap="saveImage">保存</button>
+            </view>
+        </view>
+    </view>
     
     <!-- <view class="bg-white flex-sub radius shadow-lg">
         <image src="https://image.weilanwl.com/gif/loading-white.gif" mode="aspectFit" class="gif-white response" style="height:240rpx"></image>
@@ -87,11 +111,14 @@
         </view>
         <block wx:else>
             <input bindinput="Comment" style="margin-left: 40rpx;" class="solid-bottom" type="text" focus="{{false}}" maxlength="300" cursor-spacing="10" placeholder="尽管吐槽吧....." value="{{commentValue}}"></input>
-            <view class="action">
+            <view style="margin-left:10rpx;font-size: 48rpx;">
+                <text class="{{'cuIcon-link text-grey'}}" bindtap="SharePage"></text>
+            </view>
+            <view style="margin-left:10rpx;font-size: 48rpx;">
                 <text class="{{false?'cuIcon-likefill text-red':'cuIcon-like text-grey'}}" bindtap="Likes"></text>
             </view>
-            <button class="cu-btn bg-lightBlue shadow-blur" bindtap="CommentSubmit" hidden="{{CommentShow}}">发送</button>
-            <button class="cu-btn bg-grey shadow-blur" bindtap="CommentSubmitTips" hidden="{{!CommentShow}}">{{LastTime}}S</button>
+            <button class="cu-btn bg-lightBlue shadow-blur" style="margin-left:10rpx;"  bindtap="CommentSubmit" hidden="{{CommentShow}}">发送</button>
+            <button class="cu-btn bg-grey shadow-blur" style="margin-left:10rpx;" bindtap="CommentSubmitTips" hidden="{{!CommentShow}}">{{LastTime}}S</button>
         </block>
     </view>
     

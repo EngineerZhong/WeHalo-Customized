@@ -7,24 +7,25 @@ cloud.init({
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  let { pathParam } = event
+  let { pathParam,options } = event
   try {
     const result = await cloud.openapi.wxacode.get({
         path: pathParam,
         width: 430
     })
+    // if(pathParam.indexOf('?') !== -1)pathParam = pathParam.substr(0,pathParam.indexOf('?'));
     const upload = await cloud.uploadFile({
-      cloudPath: pathParam + '.jpg',
+      cloudPath: options + '.jpg',
       fileContent: result.buffer,
     })
     var fileId = upload.fileID;
-    console.log(fildId);
-    const fileList = [fileId];
+    console.log(fileId);
+    var fileList = [fileId];
     const imgList = await cloud.getTempFileURL({
       fileList: fileList,
     })
     console.log(imgList);
-    return imgList.fileList
+    return imgList.fileList;
   } catch (err) {
     return err
   }

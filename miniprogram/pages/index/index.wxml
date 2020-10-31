@@ -11,6 +11,7 @@
         style="position:fixed;top:-9999rpx" 
         customStyle='height: 1000rpx;'
         use2D="{{true}}"
+        LRU="{{false}}"
         palette="{{paintPallette}}"
         widthPixels="100%"
         bind:imgOK="onImgOK"

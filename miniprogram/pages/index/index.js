@@ -69,9 +69,9 @@ Page({
     * 生命周期函数--监听页面初次渲染完成
     */
    onReady: function() {
-     this.setData({
-       paintPallette: new SharePage().palette('打工人,打工魂 [ 1 ]','Kafka消息队列','Kafka','https://6461-dalididilo-9g71etxb79b52752-1304058615.tcb.qcloud.la/pages/index/index.jpg'),
-     });
+    //  this.setData({
+    //    paintPallette: new SharePage().palette('打工人,打工魂 [ 1 ]','Kafka消息队列','Kafka','https://6461-dalididilo-9g71etxb79b52752-1304058615.tcb.qcloud.la/pages/index/index.jpg'),
+    //  });
    },
    /** 
    *  保存海报图片弹窗。

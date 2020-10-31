@@ -39,7 +39,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.11.1",
+  "libVersion": "2.13.2",
   "appid": "wx78e394f3c8c687e2",
   "projectname": "meow",
   "debugOptions": {

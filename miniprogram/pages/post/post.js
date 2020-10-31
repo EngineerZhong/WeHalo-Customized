@@ -1,11 +1,12 @@
 // miniprogram/pages/post/post.js
+import SharePage from '../palette/share-page';
 const app = getApp();
 const request = require('../../utils/request.js');
 let time = require('../../utils/util.js');
 var countdown = 60;
 
 Page({
-
+    imagePath: '',
     /**
      * 页面的初始数据
      */
@@ -21,9 +22,81 @@ Page({
         ButtonTimer: '',//  按钮定时器
         LastTime: 60,
         CommentSwitch: true,
-		commentValue:''
+        commentValue:'',
+        isSave: false,
     },
-
+    /**
+     * 绘制分享海报
+     */
+    SharePage: function(e){
+        var that = this;
+        let currentPage = that.route;
+        console.log(currentPage);
+        wx.cloud.callFunction({
+            // 云函数名称
+            name: 'wxacode_get',
+            // 传给云函数的参数
+            data: {
+                pathParam: currentPage + "?postId=" + that.data.postId,
+                options: currentPage.substr(currentPage.lastIndexOf('/') + 1,currentPage.length) + that.data.postId,
+                width: 430
+            },
+            success(res) {
+                console.log(res.result[0].tempFileURL);
+                /**
+                 * 标题
+                 */
+                let array = that.data.postTitle.split("-");
+                that.setData({
+                    paintPallette: new SharePage()
+                    .palette(array[0],array[1],that.data.postTags[0].name
+                    ,res.result[0].tempFileURL),
+                });
+            },
+            fail: err => {
+            },
+        })
+        
+    },
+    /** 
+    *  保存海报图片弹窗。
+    */
+     hideSaveModal(e) {
+         this.setData({
+             isSave: false
+         })
+     },
+     /** 
+     * wxfile:// 临时文件的一个大坑。
+     * <view>标签 background-image: url('') 支持渲染base64的图片格式
+     * 'data: image/jpg;base64,' + base64
+     */
+    onImgErr(e){
+        console.log(e);
+    },
+     onImgOK(e) {
+         var that = this;
+         that.imagePath = e.detail.path;
+         console.log(that.imagePath);
+         let base64 = wx.getFileSystemManager().readFileSync(that.imagePath,"base64");
+         that.setData({
+             image: 'data: image/jpg;base64,' + base64,
+             isSave: true,
+         })
+     },
+     saveImage() {
+         var that = this;
+         if (that.imagePath && typeof this.imagePath === 'string') {
+           wx.saveImageToPhotosAlbum({
+             filePath: this.imagePath,
+             success(res){
+                 that.setData({
+                     isSave:false
+                 })
+             }
+           });
+         }
+     },
     /**
      * 生命周期函数--监听页面加载
      */
