@@ -89,7 +89,7 @@ Page({
     onImgOK(e) {
         var that = this;
         that.imagePath = e.detail.path;
-        console.log(that.imagePath);
+        // console.log(that.imagePath);
         let base64 = wx.getFileSystemManager().readFileSync(that.imagePath,"base64");
         that.setData({
             image: 'data: image/jpg;base64,' + base64,
@@ -264,7 +264,7 @@ Page({
                 width: 430
             },
             success(res) {
-                console.log(res.result[0].tempFileURL);
+                // console.log(res.result[0].tempFileURL);
             },
             fail: err => {
             },

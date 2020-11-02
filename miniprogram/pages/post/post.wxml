@@ -121,10 +121,10 @@
         </view>
         <block wx:else>
             <input bindinput="Comment" style="margin-left: 40rpx;" class="solid-bottom" type="text" focus="{{false}}" maxlength="300" cursor-spacing="10" placeholder="尽管吐槽吧....." value="{{commentValue}}"></input>
-            <view style="margin-left:10rpx;font-size: 48rpx;">
+            <view style="margin-left:10rpx;font-size: 36px;">
                 <text class="{{'cuIcon-link text-grey'}}" bindtap="SharePage"></text>
             </view>
-            <view style="margin-left:10rpx;font-size: 48rpx;">
+            <view style="margin-left:10rpx;font-size: 36px;">
                 <text class="{{false?'cuIcon-likefill text-red':'cuIcon-like text-grey'}}" bindtap="Likes"></text>
             </view>
             <button class="cu-btn bg-lightBlue shadow-blur" style="margin-left:10rpx;"  bindtap="CommentSubmit" hidden="{{CommentShow}}">发送</button>

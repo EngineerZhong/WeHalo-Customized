@@ -31,7 +31,7 @@ Page({
     SharePage: function(e){
         var that = this;
         let currentPage = that.route;
-        console.log(currentPage);
+        // console.log(currentPage);
         wx.showLoading({
             title: '绘制分享海报',
         });
@@ -49,7 +49,7 @@ Page({
             },
             success(res) {
                 let tempUrl = res.result[0].tempFileURL;
-                console.log(tempUrl);
+                // console.log(tempUrl);
                 /**
                  * 标题
                  */
@@ -82,7 +82,7 @@ Page({
      * 'data: image/jpg;base64,' + base64
      */
     onImgErr(e){
-        console.log(e);
+        // console.log(e);
         this.hideLoading();
     },
     /**
@@ -92,7 +92,7 @@ Page({
     onImgOK(e) {
          var that = this;
          that.imagePath = e.detail.path;
-         console.log(that.imagePath);
+        //  console.log(that.imagePath);
          that.setData({
             image: that.imagePath,
             isSave: true,

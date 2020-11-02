@@ -19,12 +19,12 @@ exports.main = async (event, context) => {
       fileContent: result.buffer,
     })
     var fileId = upload.fileID;
-    console.log(fileId);
+    // console.log(fileId);
     var fileList = [fileId];
     const imgList = await cloud.getTempFileURL({
       fileList: fileList,
     })
-    console.log(imgList);
+    // console.log(imgList);
     return imgList.fileList;
   } catch (err) {
     return err
