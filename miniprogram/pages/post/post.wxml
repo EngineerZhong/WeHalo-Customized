@@ -28,13 +28,23 @@
     <!-- 图片保存弹窗 -->
     <view class="cu-modal {{isSave?'show':''}}">
         <view class="cu-dialog">
-            <view class="bg-img" style="background-image: url('{{image}}');height:1000rpx;">
+            <view class="flex">
+                <image class="bg-img" src="{{image}}" style="height:1000rpx;width:100%;"
+                show-menu-by-longpress="{{true}}">
+                </image>
                 <view class="cu-bar justify-end text-white">
                     <view class="action" bindtap="hideSaveModal">
                         <text class="cuIcon-close "></text>
                     </view>
                 </view>
             </view>
+            <!-- <view class="bg-img" style="background-image: url('{{image}}');height:1000rpx;">
+                <view class="cu-bar justify-end text-white">
+                    <view class="action" bindtap="hideSaveModal">
+                        <text class="cuIcon-close "></text>
+                    </view>
+                </view>
+            </view> -->
             <view class="bg-white flex padding-sm">
                 <button class="flex-sub cu-btn round bg-red shadow-blur bg-red" bindtap="hideSaveModal">取消</button>
                 <button class="flex-sub margin-left-sm cu-btn round shadow-blur bg-blue" bindtap="saveImage">保存</button>

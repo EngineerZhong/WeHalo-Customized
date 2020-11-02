@@ -32,28 +32,38 @@ Page({
         var that = this;
         let currentPage = that.route;
         console.log(currentPage);
+        wx.showLoading({
+            title: '绘制分享海报',
+        });
         wx.cloud.callFunction({
             // 云函数名称
             name: 'wxacode_get',
             // 传给云函数的参数
             data: {
                 pathParam: currentPage + "?postId=" + that.data.postId,
+                /**
+                 * 拼接云存储的位置。
+                 */
                 options: currentPage.substr(currentPage.lastIndexOf('/') + 1,currentPage.length) + that.data.postId,
                 width: 430
             },
             success(res) {
-                console.log(res.result[0].tempFileURL);
+                let tempUrl = res.result[0].tempFileURL;
+                console.log(tempUrl);
                 /**
                  * 标题
                  */
                 let array = that.data.postTitle.split("-");
+                let categories = array[0].substr(0,array[0].length - 1);
+                let title = array[1].substr(1,array[1].length);
                 that.setData({
                     paintPallette: new SharePage()
-                    .palette(array[0],array[1],that.data.postTags[0].name
-                    ,res.result[0].tempFileURL),
+                    .palette(categories,title,that.data.postTags[0].name
+                    ,tempUrl),
                 });
             },
             fail: err => {
+                that.hideLoading();
             },
         })
         
@@ -73,17 +83,51 @@ Page({
      */
     onImgErr(e){
         console.log(e);
+        this.hideLoading();
     },
-     onImgOK(e) {
+    /**
+     * 分享图片绘制完成。
+     * @param {} e 
+     */
+    onImgOK(e) {
          var that = this;
          that.imagePath = e.detail.path;
          console.log(that.imagePath);
-         let base64 = wx.getFileSystemManager().readFileSync(that.imagePath,"base64");
          that.setData({
-             image: 'data: image/jpg;base64,' + base64,
-             isSave: true,
-         })
+            image: that.imagePath,
+            isSave: true,
+            },()=>{
+                that.hideLoading();
+            }
+         )
+        /**
+         * background-image:url(); base64图片加载不完全的问题，暂不使用，更换方案。
+         */
+        //  let value = that.converImg(that.imagePath);
+        //  setTimeout(()=>{
+        //     that.setData({
+        //         image: 'data: image/jpg;base64,' + value,
+        //         isSave: true,
+        //     })
+        //  },300);
      },
+     /**
+      * 隐藏加载框
+      */
+     hideLoading:function(){
+        setTimeout(function () {
+            wx.hideLoading()
+        }, 100)
+     },
+     /**
+      * 本地文件转base64图片格式。
+      */
+     converImg: function(path){
+        return wx.getFileSystemManager().readFileSync(path,"base64");
+     },
+     /**
+      * 保存图片到相册
+      */
      saveImage() {
          var that = this;
          if (that.imagePath && typeof this.imagePath === 'string') {
@@ -92,6 +136,10 @@ Page({
              success(res){
                  that.setData({
                      isSave:false
+                 },()=>{
+                     wx.showToast({
+                       title: '保存成功。',
+                     })
                  })
              }
            });
@@ -101,9 +149,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
-
-
         // // 在页面中定义插屏广告
         // let interstitialAd = null
 
