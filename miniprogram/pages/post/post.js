@@ -54,7 +54,6 @@ Page({
             },
             success(res) {
                 let tempUrl = res.result[0].tempFileURL;
-                // console.log(tempUrl);
                 /**
                  * 标题
                  */
@@ -64,7 +63,8 @@ Page({
                 that.setData({
                     paintPallette: new SharePage()
                     .palette(categories,title,that.data.postTags[0].name
-                    ,tempUrl),
+                    ,tempUrl,app.globalData.userInfo.nickName,
+                    app.globalData.userInfo.avatarUrl),
                 });
             },
             fail: err => {
@@ -98,13 +98,14 @@ Page({
          var that = this;
          that.imagePath = e.detail.path;
         //  console.log(that.imagePath);
+        //  let base64 = wx.getFileSystemManager().readFileSync(that.imagePath,"base64");
          that.setData({
             image: that.imagePath,
             isSave: true,
             },()=>{
                 that.hideLoading();
             }
-         )
+        )
         /**
          * background-image:url(); base64图片加载不完全的问题，暂不使用，更换方案。
          */

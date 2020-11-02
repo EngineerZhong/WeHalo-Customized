@@ -47,7 +47,7 @@
             </view> -->
             <view class="bg-white flex padding-sm">
                 <button class="flex-sub cu-btn round bg-red shadow-blur bg-red" bindtap="hideSaveModal">取消</button>
-                <button class="flex-sub margin-left-sm cu-btn round shadow-blur bg-blue" bindtap="saveImage">保存</button>
+                <button class="flex-sub margin-left-sm cu-btn round shadow-blur bg-blue" bindtap="saveImage">保存并分享</button>
             </view>
         </view>
     </view>

@@ -1,7 +1,7 @@
 export default class SharePage {
-  palette(categories,title,slug,qrCode) {
+  palette(categories,title,slug,qrCode,name,avatar) {
     var startTop = 150;
-    var gapSize = 60;
+    var gapSize = 155;
     var common = {
       left: "32rpx",
       color: "white",
@@ -12,11 +12,45 @@ export default class SharePage {
       height: '1000rpx',
       views: [
         {
+          id:'avatar',
+          type:'image',
+          url: avatar,
+          css:[{
+            width:'120rpx',
+            height:'120rpx',
+            top:'100rpx',
+            left: "32rpx",
+            borderRadius:'60rpx',
+            borderWidth:'2rpx',
+            borderColor:'white',
+            borderStyle:'solid'
+          }],
+        },{
+          id:'name',
+          type: 'text',
+          text: name,
+          css:[{
+            top: ['10rpx','avatar',1],
+            left: ['50rpx','avatar',1],
+            fontSize: "30rpx",
+            color: "white",
+          }],
+        },{
+          id:'description',
+          type: 'text',
+          text: '我已加入阅读，邀你一起。',
+          css:[{
+            top: ['160rpx','name',1],
+            left: ['-10rpx','name',1],
+            fontSize: "25rpx",
+            color: "white",
+          }],
+        },{
           type: 'text',
           text: categories,
           css: [{
-              top: startTop + 'rpx',
-              fontSize: "30rpx",
+              top: startTop + gapSize + 'rpx',
+              fontSize: "25rpx",
           },common],
         },
         {
@@ -24,16 +58,18 @@ export default class SharePage {
           type: 'text',
           text: title,
           css:[{
-            top: startTop + gapSize + 'rpx',
+            textDecoration:'underline',
+            fontWeight: 'bold',
+            top: startTop + gapSize + 50 + 'rpx',
             fontSize: "40rpx",
           },common],
         },{
           id: "rect",
           type:'rect',
           css:[{
-            width: '15rpx',
-            height: '15rpx',
-            top: ['250rpx','title',1],
+            width: '10rpx',
+            height: '10rpx',
+            top: ['396rpx','title',1],
             color: 'white',
             borderRadius: '10rpx',
             left: "32rpx",
@@ -43,9 +79,9 @@ export default class SharePage {
           type: 'text',
           text: slug,
           css:[{
-            top: ['267rpx','rect',1],
+            top: ['417rpx','rect',1],
             left: "32rpx",
-            fontSize: "25rpx",
+            fontSize: "21rpx",
             color: "white",
             left:['40rpx','rect',1]
           }],
@@ -56,8 +92,8 @@ export default class SharePage {
           css: {
             bottom: '40rpx',
             right: '32rpx',
-            width: '110rpx',
-            height: '110rpx',
+            width: '125rpx',
+            height: '125rpx',
             borderRadius: '10rpx',
           },
         },{

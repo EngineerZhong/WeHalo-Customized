@@ -69,9 +69,14 @@ Page({
     * 生命周期函数--监听页面初次渲染完成
     */
    onReady: function() {
-    //  this.setData({
-    //    paintPallette: new SharePage().palette('打工人,打工魂 [ 1 ]','Kafka消息队列','Kafka','https://6461-dalididilo-9g71etxb79b52752-1304058615.tcb.qcloud.la/pages/index/index.jpg'),
-    //  });
+    var that = this;
+    // that.setData({
+    //     paintPallette: new SharePage()
+    //     .palette('打工人,打工魂 [ 1 ]','Kafka消息队列'
+    //     ,'Kafka'
+    //     ,'https://6461-dalididilo-9g71etxb79b52752-1304058615.tcb.qcloud.la/post34.jpg'
+    //     ,"大离弟弟咯。","https://dalididilo.top/upload/2020/10/WechatIMG100-78b0614b993c446da57cae5e1d2b2cd3.jpeg"),
+    //   });
    },
    /** 
    *  保存海报图片弹窗。
@@ -90,11 +95,10 @@ Page({
         var that = this;
         that.imagePath = e.detail.path;
         // console.log(that.imagePath);
-        let base64 = wx.getFileSystemManager().readFileSync(that.imagePath,"base64");
         that.setData({
-            image: 'data: image/jpg;base64,' + base64,
-            isSave:true
-        })
+            image: that.imagePath,
+            isSave: true,
+        });
     },
     saveImage() {
         var that = this;
@@ -128,7 +132,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        
         if (app.globalData.userInfo) {
             this.setData({
                 userInfo: app.globalData.userInfo,
@@ -249,7 +253,7 @@ Page({
         };
         // @todo 获取后台token网络请求API数据
         request.requestPostApi(urlAdminLogin, token, paramAdminLogin, this, this.successAdminLogin, this.failAdminLogin);
-        // this.getaccessToken();
+        this.getaccessToken();
     },
     getaccessToken:function(){
         // var wxUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
@@ -261,6 +265,7 @@ Page({
             // 传给云函数的参数
             data: {
                 pathParam:'pages/index/index',
+                options:'test',
                 width: 430
             },
             success(res) {
@@ -282,7 +287,6 @@ Page({
                 roleFlag: false,
             })
         }else {
-
             app.globalData.userInfo = e.detail.userInfo;
             that.setData({
                 userInfo: e.detail.userInfo,
