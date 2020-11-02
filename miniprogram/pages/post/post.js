@@ -1,9 +1,15 @@
+import { Z_NEED_DICT } from 'zlib';
 // miniprogram/pages/post/post.js
 import SharePage from '../palette/share-page';
 const app = getApp();
 const request = require('../../utils/request.js');
 let time = require('../../utils/util.js');
 var countdown = 60;
+/**
+ * 云数据库初始化。
+ */
+const db = wx.cloud.database();
+const _ = db.command;
 
 Page({
     imagePath: '',
@@ -189,8 +195,20 @@ Page({
         var urlSwitch = app.globalData.url + '/api/content/options/keys/comment_api_enabled';
         //@todo 评论开启按钮网络请求API数据
         request.requestGetApi(urlSwitch, token, params, this, this.successSwitch, this.failSwitch);
-
-
+        
+        //@todo 查询数据库是否存在评论的数据
+        db.collection('comments').where({
+            archives_id:that.data.postId,
+            status:'ENABLE'
+        }).get({
+            success:function(res){
+                if(res.data.length > 0){
+                    // that.setData({
+                    //     commentList:
+                    // })
+                }
+            }
+        })
     },
 
     /**
@@ -346,10 +364,9 @@ Page({
 					list[i].email = '';
 					list[i].authorUrl = 'https://cn.gravatar.com/avatar/3958035fa354403fa9ca3fca36b08068?s=256&d=mm';
 				}
-        }
-
-        list[list.length - 1].falg = false;
-	   }
+            }
+            list[list.length - 1].falg = false;
+	    }
         that.setData({
             commentList: res.data.content,
         })
@@ -427,6 +444,24 @@ Page({
                     };
                     //@todo 网络请求API数据
                     request.requestPostApi(urlPostList, token, params, this, this.successSendComment, this.failSendComment);
+                    let comments = [{
+                        content:that.data.CommentContent,
+                        user_avatar:app.globalData.userInfo.avatarUrl,
+                        // 随机rondom一个key
+                        content_id:'11',
+                        user_name:app.globalData.userInfo.nickName,
+                        status:'ENABLE',
+                        create_time:Date.parse(new Date())
+                    }];
+                    //@todo 数据库存储该文的评论。
+                    db.collection('comments').add({
+                        data:{
+                            archives_id:that.data.postId,
+                            num:_.inc(1),
+                            array:_.push(comments)
+                        }
+                    })
+
                 } else {
                     // wx.hideLoading();
                     // wx.showModal({
