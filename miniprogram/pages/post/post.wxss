@@ -34,6 +34,15 @@ page {
     transition: all 0.4s;
 }
 
+.cu-bar-input{
+    display: flex;
+	align-items: center;
+	min-height: 100rpx;
+	width:100%;
+    justify-content: space-between;
+    border: solid 1rpx #f1f1f1;
+}
+
 .DrawerPage.show {
     transform: scale(0.9, 0.9);
     left: 85vw;

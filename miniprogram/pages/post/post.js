@@ -1,3 +1,4 @@
+import util from '../../utils/util.js';
 // miniprogram/pages/post/post.js
 import SharePage from '../palette/share-page';
 const app = getApp();
@@ -29,6 +30,7 @@ Page({
         CommentSwitch: true,
         commentValue:'',
         isSave: false,
+        existData: false,
     },
     /**
      * 绘制分享海报
@@ -195,22 +197,29 @@ Page({
         var urlSwitch = app.globalData.url + '/api/content/options/keys/comment_api_enabled';
         //@todo 评论开启按钮网络请求API数据
         request.requestGetApi(urlSwitch, token, params, this, this.successSwitch, this.failSwitch);
-        
-        //@todo 查询数据库是否存在评论的数据
-        // db.collection('comments').where({
-        //     archives_id:that.data.postId,
-        //     status:'ENABLE'
-        // }).get({
-        //     success:function(res){
-        //         if(res.data.length > 0){
-        //             // that.setData({
-        //             //     commentList:
-        //             // })
-        //         }
-        //     }
-        // })
+        this.queryComments();
     },
-
+    /**
+     * 查询数据库是否存在评论的数据
+     */
+    queryComments: function(){
+        var that = this;
+        db.collection('comments').where({
+            archives_id:that.data.postId,
+            status:'ENABLE'
+        }).get({
+            success:function(res){
+                if(res.data.length > 0){
+                    let data = res.data[0];
+                    that.setData({
+                        commentList: data.array,
+                        commentNum: data.num,
+                        existData: true
+                    })
+                }
+            }
+        })
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
@@ -348,7 +357,6 @@ Page({
         console.error('failFunPosts', res)
     },
 
-
     /**
      * 评论列表请求--接口调用成功处理
      */
@@ -444,24 +452,40 @@ Page({
                     };
                     //@todo 网络请求API数据
                     request.requestPostApi(urlPostList, token, params, this, this.successSendComment, this.failSendComment);
-                    // let comments = [{
-                    //     content:that.data.CommentContent,
-                    //     user_avatar:app.globalData.userInfo.avatarUrl,
-                    //     // 随机rondom一个key
-                    //     content_id:'11',
-                    //     user_name:app.globalData.userInfo.nickName,
-                    //     status:'ENABLE',
-                    //     create_time:Date.parse(new Date())
-                    // }];
-                    // //@todo 数据库存储该文的评论。
-                    // db.collection('comments').add({
-                    //     data:{
-                    //         archives_id:that.data.postId,
-                    //         num:_.inc(1),
-                    //         array:_.push(comments)
-                    //     }
-                    // });
-
+                    let comments = [{
+                        content:that.data.CommentContent,
+                        user_avatar:app.globalData.userInfo.avatarUrl,
+                        // 随机rondom一个key
+                        content_id:util.guid(),
+                        user_name:app.globalData.userInfo.nickName,
+                        status:'ENABLE',
+                        create_time:time.formatTime(new Date(),'Y-M-D  h:m:s'),
+                    }];
+                    //@todo 数据库存储该文的评论。
+                    if(that.data.existData){
+                        wx.cloud.callFunction({
+                            name:'db_comments',
+                            data:{
+                                archivesId:that.data.postId,
+                                comments:comments
+                            },
+                            success(res){
+                                console.log(res);
+                            },fail(err){
+                                console.log(err);
+                            }
+                        })
+                    }else{
+                        db.collection('comments').add({
+                            data:{
+                                _id:that.data.postId,
+                                archives_id:that.data.postId,
+                                num:1,
+                                array:comments,
+                                status:'ENABLE',
+                            }
+                        });
+                    }
                 } else {
                     // wx.hideLoading();
                     // wx.showModal({

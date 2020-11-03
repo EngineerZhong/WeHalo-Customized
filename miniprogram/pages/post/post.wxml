@@ -101,48 +101,56 @@
     <!-- <view class="ad">
         <ad unit-id="adunit-da5b1800a9eae6d3" ad-intervals="30"></ad>
     </view> -->
-
-    <view class="cu-bar bg-white align-center">
-        <view class="action border-title">
-            <text class="text-xxl text-bold text-blue">评论</text>
-            <text class="bg-gradual-blue"></text>
-        </view>
-    </view>
-
 <!-- 评论接口 -->
-    <view class="cu-bar input" hidden="{{CommentSwitch}}">
-        <!-- <view class="action">
-            <text class="cuIcon-sound text-grey"></text>
-        </view> -->
+    <view class="cu-bar-input input" hidden="{{CommentSwitch}}">
+        
         <view class="flex justify-center" style="width:100%" wx:if="{{!hasUserInfo && canIUse}}"> 
             <view>
                 <button class="cu-btn bg-blue shadow-blur round"role="button"aria-disabled="false" open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权后可评论</button>
             </view>
         </view>
         <block wx:else>
-            <input bindinput="Comment" style="margin-left: 40rpx;" class="solid-bottom" type="text" focus="{{false}}" maxlength="300" cursor-spacing="10" placeholder="尽管吐槽吧....." value="{{commentValue}}"></input>
-            <view style="margin-left:10rpx;font-size: 36px;">
+            <input bindinput="Comment" style="margin-left: 40rpx;width:60%" class=" solid-bottom" type="text" focus="{{false}}" maxlength="300" cursor-spacing="10" placeholder="我猜你想说点什么吧....." value="{{commentValue}}"></input>
+            <view class="flex" style="align-items: center;">
+                <view style="margin-left:5rpx;font-size: 28px;">
                 <text class="{{'cuIcon-link text-grey'}}" bindtap="SharePage"></text>
+                </view>
+                <view  style="margin-left:5rpx;font-size: 28px;">
+                    <text class="{{false?'cuIcon-likefill text-red':'cuIcon-like text-grey'}}" bindtap="Likes"></text>
+                </view>
+                <button class="cu-btn bg-lightBlue shadow-blur" 
+                style="margin-left:5rpx;margin-right:5rpx;"  bindtap="CommentSubmit" hidden="{{CommentShow}}">发送</button>
+                <button class="cu-btn bg-grey shadow-blur" style="margin-left:5rpx;margin-right:5rpx;" bindtap="CommentSubmitTips" hidden="{{!CommentShow}}">{{LastTime}}S</button>
             </view>
-            <view style="margin-left:10rpx;font-size: 36px;">
-                <text class="{{false?'cuIcon-likefill text-red':'cuIcon-like text-grey'}}" bindtap="Likes"></text>
-            </view>
-            <button class="cu-btn bg-lightBlue shadow-blur" style="margin-left:10rpx;"  bindtap="CommentSubmit" hidden="{{CommentShow}}">发送</button>
-            <button class="cu-btn bg-grey shadow-blur" style="margin-left:10rpx;" bindtap="CommentSubmitTips" hidden="{{!CommentShow}}">{{LastTime}}S</button>
         </block>
     </view>
     
-    <view class="margin-bottom">
+    <view class="flex justify-start margin-bottom margin-top-sm">
+        <view class="bg-white align-center">
+            <view class="action border-title">
+                <text class="text-lg padding text-bold text-blue">评论 · {{commentNum}}</text>
+                <text class="bg-gradual-blue"></text>
+            </view>
+        </view>
+        <view class="bg-white align-center margin-left-sm">
+            <view class="action border-title">
+                <text class="text-lg padding text-bold text-blue">点赞 · {{commentNum}}</text>
+                <text class="bg-gradual-blue"></text>
+            </view>
+        </view>
+    </view>
+
+    <view class="margin-bottom margin-top-sm">
         <view class="margin-sm flex flex-wrap align-center" wx:for="{{commentList}}" wx:key="keyId" wx:for-item="commentItem" wx:for-index="index" data-id="{{index}}">
             <view class="basis-xs">
                 <!-- <view class="cu-avatar lg round margin-left-sm" style="background-image:url({{commentItem.email==''?commentItem.authorUrl:'https://gravatar.loli.net/avatar/undefined/?s=256&d=mp'}});"></view> -->
-                <view class="cu-avatar lg round margin-left-sm" style="background-image:url({{commentItem.email==''?commentItem.authorUrl:'https://gravatar.loli.net/avatar/undefined/?s=256&d=mp'}});"></view>
+                <view class="cu-avatar lg round margin-left-sm" style="background-image:url({{commentItem.user_avatar}});"></view>
             </view>
             <view class="grid col-1 basis-xl {{commentItem.falg?'solid-bottom':''}}" style="min-height:120rpx;">
                 <view class="padding-xs">
-                    <text class="text-black text-bold">{{commentItem.author}}</text>
+                    <text class="text-black text-bold">{{commentItem.user_name}}</text>
                     <view class="fr text-xs" style="line-height: 32rpx;">
-                        <text class="text-grey">{{commentItem.createTime}}</text>
+                        <text class="text-grey">{{commentItem.create_time}}</text>
                     </view>
                 </view>
                 <view class="padding-sm">
