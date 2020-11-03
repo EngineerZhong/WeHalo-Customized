@@ -31,6 +31,17 @@ Page({
         commentValue:'',
         isSave: false,
         existData: false,
+        TabCur: 0,
+        scrollLeft: 0,
+        
+    },
+    /**
+     * tab切换。
+     */
+    tabSelect:function(e){
+        this.setData({
+            TabCur:e.currentTarget.dataset.id
+        })
     },
     /**
      * 绘制分享海报
@@ -214,6 +225,7 @@ Page({
                     that.setData({
                         commentList: data.array,
                         commentNum: data.num,
+                        tabItem:[{name:'评论 · ' + data.num},{name:'点赞 · ' + data.num}],
                         existData: true
                     })
                 }

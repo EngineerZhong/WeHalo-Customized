@@ -110,7 +110,7 @@
             </view>
         </view>
         <block wx:else>
-            <input bindinput="Comment" style="margin-left: 40rpx;width:60%" class=" solid-bottom" type="text" focus="{{false}}" maxlength="300" cursor-spacing="10" placeholder="我猜你想说点什么吧....." value="{{commentValue}}"></input>
+            <input bindinput="Comment" style="margin-left: 40rpx;width:60%;border: 0rpx;" class=" solid-bottom" type="text" focus="{{false}}" maxlength="300" cursor-spacing="10" placeholder="我猜你想说点什么吧....." value="{{commentValue}}"></input>
             <view class="flex" style="align-items: center;">
                 <view style="margin-left:5rpx;font-size: 28px;">
                 <text class="{{'cuIcon-link text-grey'}}" bindtap="SharePage"></text>
@@ -125,7 +125,7 @@
         </block>
     </view>
     
-    <view class="flex justify-start margin-bottom margin-top-sm">
+    <!-- <view class="flex justify-start margin-bottom margin-top-sm">
         <view class="bg-white align-center">
             <view class="action border-title">
                 <text class="text-lg padding text-bold text-blue">评论 · {{commentNum}}</text>
@@ -138,27 +138,56 @@
                 <text class="bg-gradual-blue"></text>
             </view>
         </view>
-    </view>
-
-    <view class="margin-bottom margin-top-sm">
-        <view class="margin-sm flex flex-wrap align-center" wx:for="{{commentList}}" wx:key="keyId" wx:for-item="commentItem" wx:for-index="index" data-id="{{index}}">
-            <view class="basis-xs">
-                <!-- <view class="cu-avatar lg round margin-left-sm" style="background-image:url({{commentItem.email==''?commentItem.authorUrl:'https://gravatar.loli.net/avatar/undefined/?s=256&d=mp'}});"></view> -->
-                <view class="cu-avatar lg round margin-left-sm" style="background-image:url({{commentItem.user_avatar}});"></view>
-            </view>
-            <view class="grid col-1 basis-xl {{commentItem.falg?'solid-bottom':''}}" style="min-height:120rpx;">
-                <view class="padding-xs">
-                    <text class="text-black text-bold">{{commentItem.user_name}}</text>
-                    <view class="fr text-xs" style="line-height: 32rpx;">
-                        <text class="text-grey">{{commentItem.create_time}}</text>
+    </view> -->
+    <scroll-view scroll-x scroll-with-animation="true">
+        <view class="flex justify-start align-items margin-bottom margin-top-sm">
+            <view wx:for="{{tabItem}}" wx:key="index" wx:for-item="tabItem"  bindtap="tabSelect" data-id="{{index}}">
+                <view class="bg-white align-center">
+                    <view class="border-title" style="height:25px">
+                        <text class="text-lg padding {{index==TabCur?'text-blue cur':''}}">{{tabItem.name}}</text>
                     </view>
-                </view>
-                <view class="padding-sm">
-                    <text class="text-sm">{{commentItem.content}}</text>
                 </view>
             </view>
         </view>
+    </scroll-view>
+    <view hidden="{{TabCur == 1}}" class="margin-bottom margin-top-sm hidden">
+        <scroll-view scroll-y scroll-with-animation="true">
+            <view class="margin-sm flex flex-wrap align-center" wx:for="{{commentList}}" wx:key="keyId" wx:for-item="commentItem" wx:for-index="index" data-id="{{index}}">
+                <view class="basis-xs">
+                    <view class="cu-avatar lg round margin-left-sm" style="background-image:url({{commentItem.user_avatar}});"></view>
+                </view>
+                <view class="grid col-1 basis-xl {{commentItem.falg?'solid-bottom':''}}" style="min-height:120rpx;">
+                    <view class="padding-sm">
+                        <text class="text-black text-bold">{{commentItem.user_name}}</text>
+                        <view class="fr text-xs" style="line-height: 32rpx;">
+                            <text class="text-grey">{{commentItem.create_time}}</text>
+                        </view>
+                    </view>
+                    <view class="padding-sm">
+                        <text class="text-sm">{{commentItem.content}}</text>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
     </view>
-
-
+    <view hidden="{{TabCur == 0}}" class="margin-bottom margin-top-sm">
+        <scroll-view scroll-y scroll-with-animation="true">
+            <view class="margin-sm flex flex-wrap align-center" wx:for="{{commentList}}" wx:key="keyId" wx:for-item="commentItem" wx:for-index="index" data-id="{{index}}">
+                <view class="basis-xs">
+                    <view class="cu-avatar lg round margin-left-sm" style="background-image:url({{commentItem.user_avatar}});"></view>
+                </view>
+                <view class="grid col-1 basis-xl {{commentItem.falg?'solid-bottom':''}}" style="min-height:120rpx;">
+                    <view class="padding-sm">
+                        <text class="text-black text-bold">{{commentItem.user_name}}</text>
+                        <view class="fr text-xs" style="line-height: 32rpx;">
+                            <text class="text-grey">{{commentItem.create_time}}</text>
+                        </view>
+                    </view>
+                    <view class="padding-sm">
+                        <text class="text-sm">{{commentItem.content}}</text>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
 </scroll-view>
