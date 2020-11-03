@@ -205,14 +205,21 @@ Page({
         request.requestGetApi(urlContent, token, params, this, this.successFunPost, this.failFunPost);
 
         var urlComments = urlContent + '/comments/list_view';
+        wx.showLoading({
+          title: '加载数据中...',
+          icon: 'none',
+        })
         //@todo 评论列表网络请求API数据
-        request.requestGetApi(urlComments, token, params, this, this.successComment, this.failComment);
+        // request.requestGetApi(urlComments, token, params, this, this.successComment, this.failComment);
         var urlSwitch = app.globalData.url + '/api/content/options/keys/comment_api_enabled';
         //@todo 评论开启按钮网络请求API数据
         request.requestGetApi(urlSwitch, token, params, this, this.successSwitch, this.failSwitch);
         //@todo 查询文章评论数量。
         this.queryComments();
         this.queryArticleVote();
+        setTimeout(()=>{
+            wx.hideLoading()
+        },2000);
     },
     /**
      * 查询数据库是否存在点赞的数据

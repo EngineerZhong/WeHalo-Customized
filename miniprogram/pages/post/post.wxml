@@ -71,7 +71,7 @@
                     <text class="cuIcon-likefill"></text>
                 </view>
                 <view class="cu-tag line-red sm">
-                {{postLikes}}
+                {{voteNum == undefine || voteNum == 0?0:voteNum}}
                 </view>
             </view>
             <view class="cu-capsule round">
@@ -112,10 +112,10 @@
         <block wx:else class="padding-sm ">
             <input bindinput="Comment" style="margin-left: 20rpx;width:50%;border: 0rpx;" class="solid-bottom" type="text" focus="{{false}}" maxlength="300" cursor-spacing="10" placeholder="说点什么,不要不识抬举..." value="{{commentValue}}"></input>
             <view class="flex" style="align-items: center;">
-                <view style="margin-left:10rpx;font-size: 45rpx;">
+                <view class="animation-scale-down" style="margin-left:10rpx;font-size: 45rpx;">
                     <text class="{{'cuIcon-qr_code text-blue'}}" bindtap="SharePage"></text>
                 </view>
-                <view  style="margin-left:10rpx;font-size: 45rpx;">
+                <view class="animation-scale-down" style="margin-left:10rpx;font-size: 45rpx;">
                     <text class="{{alreadyVote?'cuIcon-appreciatefill text-blue':'cuIcon-appreciate text-grey'}}" bindtap="Likes">    
                     </text>
                 </view>
@@ -146,7 +146,7 @@
             <view wx:for="{{tabItem}}" wx:key="index" wx:for-item="tabItem"  bindtap="tabSelect" data-id="{{index}}">
                 <view class="bg-white align-center">
                     <view class="border-title" style="height:60rpx">
-                        <text class="text-lg padding {{index==TabCur?'text-blue cur':''}}">{{tabItem.name}}</text>
+                        <text class="text-lg padding-left-sm {{index==TabCur?'text-blue cur':''}}">{{tabItem.name}}</text>
                         <text  wx:if="{{index == 0}}" class="{{index==TabCur?'text-blue cur':''}}">{{commentNum == undefined?'':' · ' + commentNum}}</text>
                         <text wx:else class="{{index==TabCur?'text-blue cur':''}}">{{voteNum == undefined?'':' · ' + voteNum}}</text>
                     </view>
@@ -157,22 +157,39 @@
     <!-- 评论用户列表 -->
     <view hidden="{{TabCur == 1}}" class="margin-top-sm" style="padding-bottom:150rpx">
         <scroll-view scroll-y scroll-with-animation="true">
-            <view class="margin-sm flex flex-wrap align-center" wx:for="{{commentList}}" wx:key="keyId" wx:for-item="commentItem" wx:for-index="index" data-id="{{index}}">
-                <view class="basis-xs">
-                    <view class="cu-avatar lg round margin-left-sm" style="background-image:url({{commentItem.user_avatar}});"></view>
-                </view>
-                <view class="grid col-1 basis-xl {{commentItem.falg?'solid-bottom':''}}" style="min-height:120rpx;">
-                    <view class="padding-sm">
-                        <text class="text-black text-bold">{{commentItem.user_name}}</text>
-                        <view class="fr text-xs" style="line-height: 32rpx;">
-                            <text class="text-grey">{{commentItem.create_time}}</text>
-                        </view>
-                    </view>
-                    <view class="padding-sm">
-                        <text class="text-sm">{{commentItem.content}}</text>
+            <view wx:if="{{commentList == undefine || commentList.length == 0}}">
+                <view class="flex justify-center grid col-1" bindtouchstart="touchStart" bindtouchend="touchEnd">
+                    <view class="bg-img animation-scale-up shadow-blur margin" 
+                    style="background-image: url('../../image/empty_icon.png');height: 100rpx; width:100rpx;"></view>
+                    <view class="text-xs flex justify-center animation-scale-up" style="width:100%; text-align:center;">
+                        <view class="text-grey">暂无评论...</view>
                     </view>
                 </view>
             </view>
+            <block wx:else>
+                <view class="animation-slide-right margin-sm" wx:for="{{commentList}}" wx:key="keyId" wx:for-item="commentItem" wx:for-index="index" data-id="{{index}}">
+                    <view class="flex flex-wrap margin-top-lg">
+                        <view class="flex basis-xs justify-center">
+                            <view class="cu-avatar lg round " style="background-image:url({{commentItem.user_avatar}});"></view>
+                        </view>
+                        <view class="basis-xl padding-right-sm">
+                            <view class="flex flex-direction">
+                                <view class="flex justify-between align-center padding-right-sm">
+                                    <text class="text-black text-bold">{{commentItem.user_name}}</text>
+                                    <view class="fr text-xs" style="line-height: 32rpx;">
+                                        <text class="text-grey">{{commentItem.create_time}}</text>
+                                    </view>
+                                </view>
+                                <view>
+                                    <view style='padding-top:20rpx'>
+                                        <text class="text-sm">{{commentItem.content}}</text>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>           
+            </block>
         </scroll-view>
     </view>
     <!-- 点赞用户列表 -->
@@ -180,15 +197,15 @@
         <scroll-view scroll-y scroll-with-animation="true">
             <view wx:if="{{voteList == undefine}}">
                 <view class="flex justify-center grid col-1" bindtouchstart="touchStart" bindtouchend="touchEnd">
-                    <view class="bg-img animation-scale-up shadow-blur margin" style="background-image: url('../../image/empty_icon.png');height: 100rpx; width:100rpx;"></view>
+                    <view class="bg-img animation-scale-up shadow-blur margin" 
+                    style="background-image: url('../../image/empty_icon.png');height: 100rpx; width:100rpx;"></view>
                     <view class="text-xs flex justify-center animation-scale-up" style="width:100%; text-align:center;">
                         <view class="text-grey">暂无点赞...</view>
                     </view>
-                    <view class="text-xs flex justify-center" style="height:250rpx;"></view>
                 </view>
             </view>
             <block wx:else>
-                <view class="margin-sm flex flex-wrap align-center" wx:for="{{voteList}}" wx:key="keyId" wx:for-item="voteItem" wx:for-index="index" data-id="{{index}}">
+                <view class="animation-slide-right margin-sm flex flex-wrap align-center" wx:for="{{voteList}}" wx:key="keyId" wx:for-item="voteItem" wx:for-index="index" data-id="{{index}}">
                     <view class="flex flex-wrap justify-start align-items  margin-top-sm">
                         <view class="cu-avatar lg round margin-left-sm" style="background-image:url({{voteItem.user_avatar}});"></view>
                         <text class="flex text-black text-bold align-center margin-left-lg">{{voteItem.user_name}}</text>
