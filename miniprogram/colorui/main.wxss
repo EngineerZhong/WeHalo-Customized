@@ -4073,6 +4073,5 @@ scroll-view.cu-steps .cu-item {
 	padding: 24rpx;
 	background-repeat: no-repeat;
 	background-size: contain;
-	/* background-image:url(../image/cat.png); */
 	background-image: url('https://dalididilo.top/upload/2020/10/WechatIMG100-78b0614b993c446da57cae5e1d2b2cd3.jpeg');
 }

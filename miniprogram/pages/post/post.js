@@ -31,9 +31,11 @@ Page({
         commentValue:'',
         isSave: false,
         existData: false,
+        existVoteData:false,
         TabCur: 0,
         scrollLeft: 0,
-        
+        tabItem:[{name:'评论'},{name:'点赞'}],
+        alreadyVote:false,
     },
     /**
      * tab切换。
@@ -208,7 +210,43 @@ Page({
         var urlSwitch = app.globalData.url + '/api/content/options/keys/comment_api_enabled';
         //@todo 评论开启按钮网络请求API数据
         request.requestGetApi(urlSwitch, token, params, this, this.successSwitch, this.failSwitch);
+        //@todo 查询文章评论数量。
         this.queryComments();
+        this.queryArticleVote();
+    },
+    /**
+     * 查询数据库是否存在点赞的数据
+     */
+    queryArticleVote:function(){
+        var that = this;
+        db.collection('article_vote').where({
+            archives_id:that.data.postId,
+            status:'ENABLE'
+        }).get({
+            success:function(res){
+                if(res.data.length > 0){
+                    let data = res.data[0];
+                    /**
+                     * @todo 循环数组
+                     * some ,return true 跳出循环
+                     * every , return false 跳出循环
+                     */
+                    data.array.some(v => {
+                        if(v.user_name === app.globalData.userInfo.nickName){
+                            that.setData({
+                                alreadyVote: true
+                            })
+                            return true;
+                        }
+                    });
+                    that.setData({
+                        voteList: data.array,
+                        voteNum: data.num,
+                        existVoteData: true
+                    })
+                }
+            }
+        })
     },
     /**
      * 查询数据库是否存在评论的数据
@@ -225,12 +263,11 @@ Page({
                     that.setData({
                         commentList: data.array,
                         commentNum: data.num,
-                        tabItem:[{name:'评论 · ' + data.num},{name:'点赞 · ' + data.num}],
                         existData: true
                     })
                 }
             }
-        })
+        });
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -456,14 +493,15 @@ Page({
                     var token = app.globalData.token;
                     var params = {
                         author: app.globalData.userInfo.nickName,
-                        authorUrl: "https://github.com/aquanlerou/WeHalo",
+                        authorUrl: app.globalData.userInfo.avatarUrl,
                         content: that.data.CommentContent,
-                        email: "aquanlerou@eunji.cn",
+                        email: "xunwu451@126.com",
                         parentId: 0,
                         postId: that.data.postId,
                     };
                     //@todo 网络请求API数据
                     request.requestPostApi(urlPostList, token, params, this, this.successSendComment, this.failSendComment);
+                    //@todo 数据库存储该文的评论。
                     let comments = [{
                         content:that.data.CommentContent,
                         user_avatar:app.globalData.userInfo.avatarUrl,
@@ -473,18 +511,20 @@ Page({
                         status:'ENABLE',
                         create_time:time.formatTime(new Date(),'Y-M-D  h:m:s'),
                     }];
-                    //@todo 数据库存储该文的评论。
                     if(that.data.existData){
                         wx.cloud.callFunction({
                             name:'db_comments',
                             data:{
                                 archivesId:that.data.postId,
                                 comments:comments
-                            },
-                            success(res){
-                                console.log(res);
-                            },fail(err){
-                                console.log(err);
+                            },success: res=>{
+                                that.queryComments();
+                            },fail:err=>{
+                                wx.showToast({
+                                    title: '服务器繁忙，稍后重试',
+                                    icon: 'none',
+                                    duration: 1000
+                                });
                             }
                         })
                     }else{
@@ -495,6 +535,14 @@ Page({
                                 num:1,
                                 array:comments,
                                 status:'ENABLE',
+                            },success: res=>{
+                                that.queryComments();
+                            },fail:err=>{
+                                wx.showToast({
+                                    title: '服务器繁忙，稍后重试',
+                                    icon: 'none',
+                                    duration: 1000
+                                });
                             }
                         });
                     }
@@ -517,11 +565,73 @@ Page({
                 }
             })
         }
-
-
- 
     },
-
+    /**
+     * @todo 文章点赞功能,目前数据结构好似不太优雅，先解决功能问题，后续有性能问题，再改。fuck!
+     * article_vote
+     */
+    Likes: function() {
+        var that = this;
+        if(that.data.alreadyVote){
+            wx.showToast({
+              title: '给出的赞,就收不回了。',
+              icon:'none',
+              duration:1000
+            })
+            return;
+        }
+        let vote = [{
+            user_name:app.globalData.userInfo.nickName,
+            user_avatar:app.globalData.userInfo.avatarUrl,
+            create_time:time.formatTime(new Date(),'Y-M-D  h:m:s'),
+            status:'ENABLE',
+        }];
+        if(that.data.existVoteData){
+            db.collection('article_vote').where({
+                archives_id: that.data.postId,
+                status:'ENABLE',
+            }).update({
+                data:{
+                    num:_.inc(1),
+                    array:_.push(vote)
+                  },
+                success: res => {
+                    that.queryArticleVote();
+                    that.setData({
+                        alreadyVote:true
+                    })
+                },
+                fail: e => {
+                    wx.showToast({
+                        title: '服务器繁忙，稍后重试',
+                        icon: 'none',
+                        duration: 1000
+                    });
+                }
+            });
+        }else{
+            db.collection('article_vote').add({
+                data:{
+                    _id:that.data.postId,
+                    archives_id:that.data.postId,
+                    num:1,
+                    array:vote,
+                    status:'ENABLE',
+                },success:res => {
+                    that.queryArticleVote();
+                    that.setData({
+                        alreadyVote:true
+                    })
+                },fail:e => {
+                    wx.showToast({
+                      title: '服务器繁忙，稍后重试',
+                      icon: 'none',
+                      duration: 1000
+                    })
+                }
+            });
+        }
+    },
     CommentSubmitTips: function() {
         wx.showToast({
             title: this.data.LastTime + "s 后再次评论",
@@ -529,16 +639,6 @@ Page({
             duration: 1000
         })
     },
-
-    Likes: function() {
-        wx.showToast({
-            title: "文章点赞功能开发中...",
-            icon: 'none',
-            duration: 2000
-        })
-    },
-
-
     successSendComment: function (res, selfObj) {
         var that = this;
         // console.warn(res.data);
