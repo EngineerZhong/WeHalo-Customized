@@ -65,8 +65,23 @@ Page({
             colour: 'bg-lightBlue'
         }],
     },
-    gitHubTrend:(e)=>{
-
+    /**
+     * TabBar点击事件
+     */
+    gitHub:(e)=>{
+        wx.switchTab({
+          url: '../index/index',
+        });
+    },
+    home:(e)=>{
+        wx.switchTab({
+            url: '../wehalo/wehalo',
+        });
+    },
+    mine:(e)=>{
+        wx.switchTab({
+            url: '../friends/friends',
+        });
     },
     /**
     * 生命周期函数--监听页面初次渲染完成

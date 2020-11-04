@@ -7,6 +7,19 @@
     "pages/friends/friends",
     "pages/journal/journal"
   ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index"
+      },
+      {
+        "pagePath": "pages/wehalo/wehalo"
+      },
+      {
+        "pagePath": "pages/friends/friends"
+      }
+    ]
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -19,7 +32,7 @@
     "wh-typeWriter": "/components/typeWriter/wh-typeWriter",
     "wh-authorCard": "/components/authorCard/wh-authorCard",
     "wh-addTips": "/components/addTips/wh-addTips",
-    "painter": "/components/painter/painter"
+    "painter":"/components/painter/painter"
   },
   "plugins": {
     "htmltowxml": {

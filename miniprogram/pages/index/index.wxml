@@ -265,15 +265,15 @@
 <!-- 底部操作栏。 -->
 <view class="box">
     <view class="bar tabbar bg-white">
-        <view class="action text-lightBlue">
+        <view class="action text-lightBlue" bindtap="home">
             <view class="cuIcon-homefill"></view> Home
         </view>
-        <view class="action text-gray add-action">
-            <button class="cu-btn cuIcon-github bg-lightBlue shadow" bindtap="gitHubTrend">
+        <view class="action text-gray add-action" >
+            <button class="cu-btn cuIcon-github bg-lightBlue shadow" bindtap="gitHub">
             </button>
             Github
         </view>
-        <view class="action text-gray">
+        <view class="action text-gray" bindtap="mine">
             <view class="cuIcon-my">
             </view>
             Mine
