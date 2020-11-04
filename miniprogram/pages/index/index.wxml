@@ -1,5 +1,6 @@
 <wh-authorCard isHidden="{{aflag}}" id="authorCardId"></wh-authorCard>
-<scroll-view scroll-y class="DrawerPage {{modalName=='viewModal'?'show':''}}" bindscroll="onPageScroll" scroll-with-animation="true" style="background-color: {{skin?'#ffffff':'#ffffff'}};" bindscrolltolower="loadMore">
+<view>
+    <scroll-view scroll-y class="DrawerPage {{modalName=='viewModal'?'show':''}}" bindscroll="onPageScroll" scroll-with-animation="true" style="padding-bottom:130rpx;background-color: {{skin?'#ffffff':'#ffffff'}};" bindscrolltolower="loadMore">
     <cu-custom bgColor="bg-lightGrey" isBack="{{false}}" isCustom="{{false}}" isNav="{{scrollTop>120?false:true}}" isFixed="fixed">
         <view slot="backText">返回</view>
         <view slot="content" class="text-shadow-meows">
@@ -262,3 +263,22 @@
         </view>
     </view>
 </scroll-view>
+<!-- 底部操作栏。 -->
+    <view class="box">
+        <view class="bar tabbar bg-white">
+            <view class="action text-lightBlue">
+                <view class="cuIcon-homefill"></view> Home
+            </view>
+            <view class="action text-gray add-action">
+                <button class="cu-btn cuIcon-github bg-lightBlue shadow">
+                </button>
+                Github
+            </view>
+            <view class="action text-gray">
+                <view class="cuIcon-my">
+                </view>
+                Mine
+            </view>
+        </view>
+    </view>
+</view>
