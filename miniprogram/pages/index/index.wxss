@@ -118,6 +118,11 @@
 	padding: 0;
 }
 
+.swiperclass{
+    height:2000rpx;
+
+}
+
 .bar.tabbar .action.add-action::after {
 	content: "";
 	position: absolute;

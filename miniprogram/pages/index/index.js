@@ -65,6 +65,9 @@ Page({
             colour: 'bg-lightBlue'
         }],
     },
+    gitHubTrend:(e)=>{
+
+    },
     /**
     * 生命周期函数--监听页面初次渲染完成
     */
@@ -253,7 +256,22 @@ Page({
         };
         // @todo 获取后台token网络请求API数据
         request.requestPostApi(urlAdminLogin, token, paramAdminLogin, this, this.successAdminLogin, this.failAdminLogin);
-        this.getaccessToken();
+        // this.getaccessToken();
+
+        // gitHub trend接口调用，cheerio解析Dom封装成array。
+        // 引用自：https://github.com/huangjianke/Gitter
+        // wx.cloud.callFunction({
+        //     name:'trend',
+        //     data:{
+        //         type:'repositories', 
+        //         language:'Java',
+        //         since:'daily'
+        //     },success:res=>{
+        //         console.log(res);
+        //     },fail:err=>{
+        //         console.log(err);
+        //     }
+        // })
     },
     getaccessToken:function(){
         // var wxUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
