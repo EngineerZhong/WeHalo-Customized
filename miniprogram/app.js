@@ -2,7 +2,7 @@
 App({
     onLaunch: function() {
         //隐藏系统tabbar
-        wx.hideTabBar();
+        // wx.hideTabBar();
         if (!wx.cloud) {
             console.error('请使用 2.2.3 或以上的基础库以使用云能力')
         }
@@ -98,13 +98,13 @@ App({
         userInfo: null,
         skin: null,
         roleFlag: false,
-        url: "https://dalididilo.top",//http://localhost:8090
-        BlogName: "大离弟弟咯。",
-        token: "dalididilo",
+        url: "博客地址",//http://localhost:8090
+        BlogName: "博客名称",//大离弟弟咯。
+        token: "Access Key",// Access Key
         highlightStyle: "dracula", //代码高亮样式，可用值default,darcula,dracula,tomorrow
-        adminOpenid: "o8uur5bWqiXnYBrqj3sYGR6rDr6E",
-        HaloUser: "dalididilo",
-        HaloPassword: "Marryme1234"
+        adminOpenid: "xxxxxxx",//导入项目后可以在Console中看到  openidCloudResult: xxxxxxx  (xxx就是adminOpenid)
+        HaloUser: "xxxx",//Halo 博客账号
+        HaloPassword: "xxxx"//Halo 博客密码
     }
     
 })

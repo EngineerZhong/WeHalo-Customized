@@ -7,19 +7,6 @@
     "pages/friends/friends",
     "pages/journal/journal"
   ],
-  "tabBar": {
-    "list": [
-      {
-        "pagePath": "pages/index/index"
-      },
-      {
-        "pagePath": "pages/wehalo/wehalo"
-      },
-      {
-        "pagePath": "pages/friends/friends"
-      }
-    ]
-  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

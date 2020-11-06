@@ -6,7 +6,13 @@ export default class SharePage {
       left: "32rpx",
       color: "white",
     };
+    /**
+     * 自行定制调整并修改。
+     */
     return {
+      /**
+       * 海报背景图片
+       */
       background: 'https://dalididilo.top/upload/2020/10/%E6%B5%B7%E6%8A%A501-f7d756c19b894c34a2f881845398f3a8.jpg',
       width: '700rpx',
       height: '1000rpx',

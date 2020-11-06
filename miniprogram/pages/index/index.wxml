@@ -263,7 +263,7 @@
         </view>
     </scroll-view>
 <!-- 底部操作栏。 -->
-<view class="box">
+<!-- <view class="box">
     <view class="bar tabbar bg-white">
         <view class="action text-lightBlue" bindtap="home">
             <view class="cuIcon-homefill"></view> Home
@@ -278,5 +278,5 @@
             </view>
             Mine
         </view>
-    </view>
-</view>
+    </view> -->
+<!-- </view> -->
