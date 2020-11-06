@@ -1,8 +1,8 @@
 
 ## 增加的新功能部分
-[https://dalididilo.top/upload/2020/11/1321604646366_.pic-a03b408a295e4036adfdd477466035d1.jpg](首页UI调整/标签分类)
-[https://dalididilo.top/upload/2020/11/1311604646363_.pic-86a515e418f642018079b3330d5e9d4f.jpg](点赞/评论功能/UI调整)
-[https://dalididilo.top/upload/2020/11/1301604646362_.pic-95ba1b9e3c254aac86764c61286ad4df.jpg](生成海报功能)
+[![](https://dalididilo.top/upload/2020/11/1321604646366_.pic-a03b408a295e4036adfdd477466035d1.jpg)](首页UI调整/标签分类)
+[![](https://dalididilo.top/upload/2020/11/1311604646363_.pic-86a515e418f642018079b3330d5e9d4f.jpg)](点赞/评论功能/UI调整)
+[![](https://dalididilo.top/upload/2020/11/1301604646362_.pic-95ba1b9e3c254aac86764c61286ad4df.jpg)](生成海报功能)
 
 
 
