@@ -64,6 +64,7 @@ export default class SharePage {
           type: 'text',
           text: title,
           css:[{
+            width:'650rpx',
             textDecoration:'underline',
             fontWeight: 'bold',
             top: startTop + gapSize + 50 + 'rpx',
@@ -85,7 +86,7 @@ export default class SharePage {
           type: 'text',
           text: slug,
           css:[{
-            top: ['417rpx','rect',1],
+            top: ['385rpx','title',1],
             left: "32rpx",
             fontSize: "21rpx",
             color: "white",
